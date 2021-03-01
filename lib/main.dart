@@ -54,11 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ]),
           ),
-          Icon(
-            Icons.star,
-            color: Colors.red[400],
-          ),
-          Text("41")
+          // Icon(
+          //   Icons.star,
+          //   color: Colors.red[400],
+          // ),
+          // Text("41")
+          FavoriteWidget()
         ],
       ),
     );
@@ -115,8 +116,50 @@ class _MyHomePageState extends State<MyHomePage> {
             textSection
           ],
         ));
-    
-    
   }
   
+}
+
+//收藏按钮
+class FavoriteWidget extends StatefulWidget{
+
+  @override
+  State<StatefulWidget> createState() => _FavoriteState();
+
+}
+
+class _FavoriteState extends State<FavoriteWidget>{
+  var _isFavorite = true;
+  int count = 41;
+
+  void toggle(){
+    if(_isFavorite){
+      _isFavorite = false;
+      count--;
+    }else{
+      _isFavorite = true;
+      count++;
+    }
+    setState((){
+
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Row(
+      children: [
+        GestureDetector(
+          child: Icon(
+            _isFavorite ?
+            Icons.star : Icons.star_border,
+            color: Colors.red[400],
+          ),
+          onTap: toggle,
+        ),
+        Text(count.toString())
+      ],
+    );
+  }
+
 }
