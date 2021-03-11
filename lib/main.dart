@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/SecondPage.dart';
+import 'package:flutter_app/ThirdPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: { //定义路由表
+        "third_page":(context)=>ThirdPage(),
+      }
     );
   }
 }
@@ -121,24 +125,39 @@ class _MyHomePageState extends State<MyHomePage> {
             titleSection,
             buttonSection,
             textSection,
-            new Container(
-              child: new FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) {
-                                return new SecondPage();
-                              },
-                              //传递值
-                              settings: new RouteSettings(arguments: 100)))
-                      .then((value) => Fluttertoast.showToast(
-                          msg: '回传的数据：$value', gravity: ToastGravity.BOTTOM));
-                },
-                child: new Text("跳转到下个界面"),
-                height: 50,
-                minWidth: 180,
-              ),
+            new Row(
+              children: [
+                new TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) {
+                              return new SecondPage();
+                            },
+                            //传递值
+                            settings: new RouteSettings(arguments: 100)))
+                        .then((value) => Fluttertoast.showToast(
+                        msg: '回传的数据：$value', gravity: ToastGravity.BOTTOM));
+                  },
+                  child: new Text("跳转到下个界面"),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                ),
+                new TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'third_page');
+                  },
+                  child: new Text("跳转到第三个界面"),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                  ),
+                ),
+              ],
             ),
           ],
         ));
