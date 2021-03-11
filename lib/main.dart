@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/SecondPage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() {
@@ -40,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Expanded(
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
@@ -83,15 +85,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
     }
+
     //按钮
-    Widget buttonSection = new Container(child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        buildButton(Icons.call, "电话"),
-        buildButton(Icons.near_me, '地址'),
-        buildButton(Icons.share, '分享')
-      ],
-    ),);
+    Widget buttonSection = new Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          buildButton(Icons.call, "电话"),
+          buildButton(Icons.near_me, '地址'),
+          buildButton(Icons.share, '分享')
+        ],
+      ),
+    );
     //文字介绍
     Widget textSection = Container(
       padding: EdgeInsets.all(32.0),
@@ -108,41 +113,57 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: ListView(
           children: [
-            Image.asset('images/lake.jpg',
-            height: 240.0,
-            fit: BoxFit.cover,),
+            Image.asset(
+              'images/lake.jpg',
+              height: 240.0,
+              fit: BoxFit.cover,
+            ),
             titleSection,
             buttonSection,
-            textSection
+            textSection,
+            new Container(
+              child: new FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) {
+                                return new SecondPage();
+                              },
+                              //传递值
+                              settings: new RouteSettings(arguments: 100)))
+                      .then((value) => Fluttertoast.showToast(
+                          msg: '回传的数据：$value', gravity: ToastGravity.BOTTOM));
+                },
+                child: new Text("跳转到下个界面"),
+                height: 50,
+                minWidth: 180,
+              ),
+            ),
           ],
         ));
   }
-  
 }
 
 //收藏按钮
-class FavoriteWidget extends StatefulWidget{
-
+class FavoriteWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _FavoriteState();
-
 }
 
-class _FavoriteState extends State<FavoriteWidget>{
+class _FavoriteState extends State<FavoriteWidget> {
   var _isFavorite = true;
   int count = 41;
 
-  void toggle(){
-    if(_isFavorite){
+  void toggle() {
+    if (_isFavorite) {
       _isFavorite = false;
       count--;
-    }else{
+    } else {
       _isFavorite = true;
       count++;
     }
-    setState((){
-
-    });
+    setState(() {});
   }
 
   @override
@@ -151,8 +172,7 @@ class _FavoriteState extends State<FavoriteWidget>{
       children: [
         GestureDetector(
           child: Icon(
-            _isFavorite ?
-            Icons.star : Icons.star_border,
+            _isFavorite ? Icons.star : Icons.star_border,
             color: Colors.red[400],
           ),
           onTap: toggle,
@@ -161,5 +181,4 @@ class _FavoriteState extends State<FavoriteWidget>{
       ],
     );
   }
-
 }
