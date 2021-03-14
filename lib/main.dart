@@ -126,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
             buttonSection,
             textSection,
             new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 new TextButton(
                   onPressed: () {
