@@ -22,6 +22,7 @@ Widget _column = new Column(
     _container,
     _textWidget,
     _imageWidget,
+    Expanded(child: _listView),
   ],
 );
 
@@ -94,4 +95,13 @@ Widget _imageWidget = new Row(
       fadeOutDuration: Duration(milliseconds: 200),
     )
   ],
+);
+
+Widget _listView = ListView.separated(
+  itemBuilder: (BuildContext context, int index) => ListTile(
+    title: Text('我是标题 $index'),
+    subtitle: Text('副标题 $index'),
+  ),
+  itemCount: 50,
+  separatorBuilder: (BuildContext context, int index) => index % 2 == 0 ? Divider(color: Colors.grey) : Divider(color: Colors.red),
 );
